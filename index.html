@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방어율 특이점 계산기 (최대 스테이지)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>방어율 특이점 계산기 (최대 스테이지)</h1>
+        <p>목표 방어율을 입력하세요.</p>
+        <input type="number" id="targetDefense" placeholder="목표 방어율 (예: 2500)" oninput="validateInput(this)">
+        <button onclick="calculateMaxStage()">최대 스테이지 계산하기</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+
+        function validateInput(input) {
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+
+        function calculateMaxStage() {
+            const targetDefense = parseFloat(document.getElementById('targetDefense').value);
+
+            if (isNaN(targetDefense) || targetDefense <= 0) {
+                alert('올바른 목표 방어율을 입력하세요. (0보다 큰 숫자)');
+                return;
+            }
+
+            let maxStage = 1; 
+            let found = false;
+
+            for (let stage = 1; stage <= 1000; stage++) {
+                for (let subStage = 1; subStage <= 100; subStage++) {
+                    let calculation = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
+
+                    if (stage % 9 === 0) {
+                        calculation += (stage / 9) - 1 / 10;
+                    } else {
+                        calculation += Math.floor(stage / 9) / 10;
+                    }
+
+                    if (calculation >= targetDefense) {
+                        maxStage = stage - 1;
+                        found = true;
+                        break;
+                    }
+                }
+                if (found) break;
+            }
+
+            document.getElementById('result').innerText = `입력한 방어율 ${targetDefense}% 이상이 적용되는 최대 스테이지는 ${maxStage}-${subStage}입니다.`;
+        }
+    </script>
+</body>
+</html>
