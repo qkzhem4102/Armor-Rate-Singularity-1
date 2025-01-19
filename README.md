@@ -1,1 +1,0 @@
-# Armor-Rate-Singularity-1
