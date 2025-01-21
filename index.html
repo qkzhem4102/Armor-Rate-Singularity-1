@@ -75,12 +75,12 @@
                 return;
             }
 
-            let maxStage = 1; 
+            let maxStage = 1;
+            let maxSubStage = 1;
             let found = false;
 
             for (let stage = 1; stage <= 1000; stage++) {
                 for (let subStage = 1; subStage <= 100; subStage++) {
-
                     let calculation = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
 
                     if (stage % 9 === 0) {
@@ -91,6 +91,7 @@
 
                     if (calculation >= targetDefense) {
                         maxStage = stage - 1;
+                        maxSubStage = subStage - 1;
                         found = true;
                         break;
                     }
@@ -98,7 +99,7 @@
                 if (found) break;
             }
 
-            document.getElementById('result').innerText = `입력한 방어율 ${targetDefense}% 이상이 적용되는 최대 스테이지는 ${maxStage}입니다.`;
+            document.getElementById('result').innerText = `입력한 방어율 ${targetDefense}% 이상이 적용되는 최대 스테이지는 ${maxStage}-${maxSubStage}입니다.`;
         }
     </script>
 </body>
