@@ -75,11 +75,11 @@
                 return;
             }
 
-            let maxStage = 1;
-            let maxSubStage = 1;
+            let maxStage = 0;
+            let maxSubStage = 0;
             let found = false;
 
-            for (let stage = 1; stage <= 1000; stage++) {
+            for (let stage = 1; stage <= 1000000; stage++) {
                 for (let subStage = 1; subStage <= 100; subStage++) {
                     let calculation = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
 
@@ -89,9 +89,11 @@
                         calculation += Math.floor(stage / 9) / 10;
                     }
 
+                    calculation += 1; 
+
                     if (calculation >= targetDefense) {
-                        maxStage = stage - 1;
-                        maxSubStage = subStage - 1;
+                        maxStage = stage;
+                        maxSubStage = subStage;
                         found = true;
                         break;
                     }
@@ -99,7 +101,11 @@
                 if (found) break;
             }
 
-            document.getElementById('result').innerText = `방어율 ${targetDefense}%에서 방어율 특이점이 적용되는 최대 스테이지는 ${maxStage}-${maxSubStage}입니다.`;
+            if (!found) {
+                document.getElementById('result').innerText = `목표 방어율을 초과하는 스테이지를 찾을 수 없습니다.`;
+            } else {
+                document.getElementById('result').innerText = `방어율 ${targetDefense}%에서 방어율 특이점이 적용되는 최대 스테이지는 ${maxStage}-${maxSubStage}입니다.`;
+            }
         }
     </script>
 </body>
