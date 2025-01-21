@@ -71,7 +71,7 @@
             const targetDefense = parseFloat(document.getElementById('targetDefense').value);
 
             if (isNaN(targetDefense) || targetDefense <= 0) {
-                alert('올바른 목표 방어율을 입력하세요. (0보다 큰 숫자)');
+                alert('올바른 방어율을 입력하세요. (0보다 큰 숫자)');
                 return;
             }
 
@@ -84,7 +84,7 @@
                     let calculation = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
 
                     if (stage % 9 === 0) {
-                        calculation += (stage / 9) - 1 / 10;
+                        calculation += Math.floor(stage / 9) - 1 / 10;
                     } else {
                         calculation += Math.floor(stage / 9) / 10;
                     }
@@ -99,7 +99,7 @@
                 if (found) break;
             }
 
-            document.getElementById('result').innerText = `입력한 방어율 ${targetDefense}% 이상이 적용되는 최대 스테이지는 ${maxStage}-${maxSubStage}입니다.`;
+            document.getElementById('result').innerText = `방어율 ${targetDefense}%에서 방어율 특이점이 적용되는 최대 스테이지는 ${maxStage}-${maxSubStage}입니다.`;
         }
     </script>
 </body>
