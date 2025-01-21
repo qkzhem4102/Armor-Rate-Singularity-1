@@ -84,7 +84,7 @@
                     let calculation = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
 
                     if (stage % 9 === 0) {
-                        calculation += Math.floor(stage / 9) - 1 / 10;
+                        calculation += Math.floor((stage / 9) - 1) / 10;
                     } else {
                         calculation += Math.floor(stage / 9) / 10;
                     }
