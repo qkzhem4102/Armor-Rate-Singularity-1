@@ -11,12 +11,14 @@
             margin-top: 50px;
         }
         .container {
-            width: 600px;
+            width: 90%;
+            max-width: 600px;
             margin: 0 auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
         }
         input {
             width: 100%;
@@ -51,6 +53,19 @@
             font-size: 1.2em;
             font-weight: bold;
         }
+        img {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 1px 1px 6px rgba(0,0,0,0.1);
+        }
+        .explanation {
+            text-align: left;
+            font-size: 0.9em;
+            color: #444;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -60,6 +75,18 @@
         <input type="number" id="targetDefense" placeholder="현재 방어율 (예: 5126.4 -> 5126)" step="any" oninput="validateInput(this)">
         <button onclick="calculateMaxStage()">최대 스테이지 계산하기</button>
         <div class="result" id="result"></div>
+    </div>
+
+    <div class="container" style="margin-top: 40px;">
+        <h2>방어율 특이점이란?</h2>
+        <p style="font-size: 0.95em; color: #555;">
+            현재 스테이지에서 <strong>대미지 무시가 가능해지는 방어율의 최솟값</strong>입니다.
+        </p>
+        <img src="방어율_특이점_설명.jpg" alt="방어율 특이점 설명 이미지">
+        <p class="explanation">
+            이 수치는 게임 시스템 내에서 특정 수치 이상의 방어율을 달성하면, 해당 스테이지의 적으로부터 받는 대미지를 완전히 무시하게 되는 임계점을 의미합니다.<br>
+            따라서 특이점 이상으로 방어율을 높이면 생존률이 급격히 향상됩니다.
+        </p>
     </div>
 
     <script>
@@ -89,7 +116,7 @@
                         calculation += Math.floor(stage / 9) / 10;
                     }
 
-                    calculation += 1; 
+                    calculation += 1;
 
                     if (calculation >= targetDefense) {
                         maxStage = stage;
