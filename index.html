@@ -24,13 +24,13 @@
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       width: 100%;
-      max-width: 600px;
+      max-width: 750px;
       text-align: center;
     }
 
-    h1 {
+    h1, h2 {
       font-size: 2em;
       margin-bottom: 10px;
     }
@@ -38,6 +38,8 @@
     p {
       font-size: 1.1em;
       color: #333;
+      line-height: 1.7;
+      margin: 10px 0;
     }
 
     img {
@@ -49,7 +51,7 @@
 
     input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       font-size: 1em;
       border: 1px solid #ccc;
@@ -58,7 +60,7 @@
 
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background-color: #4CAF50;
       color: white;
       font-size: 1em;
@@ -73,20 +75,22 @@
 
     .result {
       margin-top: 20px;
-      font-size: 1.2em;
+      font-size: 1.3em;
       font-weight: bold;
+      color: #222;
     }
 
     .explanation {
       text-align: left;
       font-size: 1em;
       color: #444;
-      line-height: 1.6;
+      line-height: 1.7;
+      margin-top: 15px;
     }
 
-    /* 모바일용 조정 */
+    /* 모바일 최적화 */
     @media (max-width: 768px) {
-      h1 {
+      h1, h2 {
         font-size: 1.6em;
       }
 
@@ -106,8 +110,8 @@
     <h1>방어율 특이점 계산기</h1>
     <p>스테이지와 세부 스테이지 값을 입력하세요.</p>
     <img src="스테이지_값.jpg" alt="스테이지 예시 이미지" style="width: 50%; max-width: 250px;" />
-    <input type="number" id="stage" placeholder="스테이지 (예: 200-48 → 200)" />
-    <input type="number" id="subStage" placeholder="세부 스테이지 (예: 200-48 → 48)" />
+    <input type="number" id="stage" placeholder="스테이지 (예: 1017-20 → 1017)" />
+    <input type="number" id="subStage" placeholder="세부 스테이지 (예: 1017-20 → 20)" />
     <button onclick="calculate()">계산하기</button>
     <div class="result" id="result"></div>
   </div>
