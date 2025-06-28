@@ -1,69 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>방어율 특이점 계산기</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 40px 10px;
-      background-color: #f9f9f9;
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .wrapper {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     .container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
-      margin-bottom: 50px;
-      width: 100%;
-      max-width: 780px;
-      text-align: center;
-    }
-
-    h1, h2 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 1.1em;
-      color: #333;
-      line-height: 1.7;
-      margin: 10px 0;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
+      width: 420px;
+      padding: 20px;
+      border: 1px solid #ccc;
       border-radius: 10px;
-      margin: 20px 0;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      background-color: white;
     }
 
     input {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin: 10px 0;
-      font-size: 1em;
       border: 1px solid #ccc;
       border-radius: 5px;
+      box-sizing: border-box;
     }
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       background-color: #4CAF50;
       color: white;
-      font-size: 1em;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -75,92 +52,107 @@
 
     .result {
       margin-top: 20px;
-      font-size: 1.3em;
+      font-size: 1.2em;
       font-weight: bold;
-      color: #222;
     }
 
-    .explanation {
-      text-align: left;
-      font-size: 1em;
-      color: #444;
-      line-height: 1.7;
-      margin-top: 15px;
+    .count {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #666;
     }
 
-    /* 모바일 최적화 */
+    img {
+      max-width: 100%;
+      height: auto;
+      margin: 10px 0;
+    }
+
     @media (max-width: 768px) {
-      h1, h2 {
-        font-size: 1.6em;
-      }
-
-      .container {
-        padding: 20px;
-      }
-
-      .explanation {
-        font-size: 0.95em;
+      .wrapper {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
 </head>
 <body>
-  <!-- 계산기 영역 -->
-  <div class="container">
-    <h1>방어율 특이점 계산기</h1>
-    <p>스테이지와 세부 스테이지 값을 입력하세요.</p>
-    <img src="스테이지_값.jpg" alt="스테이지 예시 이미지" style="width: 50%; max-width: 250px;" />
-    <input type="number" id="stage" placeholder="스테이지 (예: 1017-20 → 1017)" />
-    <input type="number" id="subStage" placeholder="세부 스테이지 (예: 1017-20 → 20)" />
-    <button onclick="calculate()">계산하기</button>
-    <div class="result" id="result"></div>
+
+  <div class="wrapper">
+    <!-- 계산기 -->
+    <div class="container">
+      <h2>방어율 특이점 계산기</h2>
+      <p>스테이지와 세부 스테이지 값을 입력하세요.</p>
+      <img src="스테이지_값.jpg" alt="스테이지 예시 이미지" style="width: 50%;">
+      <input type="number" id="stage" placeholder="스테이지 (예: 5200)">
+      <input type="number" id="subStage" placeholder="세부 스테이지 (예: 10)">
+      <button onclick="calculate()">계산하기</button>
+      <div class="result" id="result"></div>
+      <div class="count">총 계산 횟수: <span id="count">0</span>회</div>
+    </div>
+
+    <!-- 설명 -->
+    <div class="container">
+      <h2>방어율 특이점이란?</h2>
+      <p style="font-size: 0.95em; color: #555;">
+        현재 스테이지에서 <br>
+        <strong>대미지 무시가 가능해지는 방어율의 최솟값</strong>을 의미합니다.
+      </p>
+      <img src="방어율_특이점_설명.jpg" alt="방어율 특이점 설명 이미지">
+      <p>
+        방어율 특이점은 스테이지마다 모두 다릅니다.<br>
+        방어율 특이점을 달성하거나 초과하면 해당 스테이지의 적으로부터 받는 대미지를 완전히 무시하게 됩니다.<br>
+        따라서 방어율 특이점보다 방어율이 높으면 생존률이 급격히 향상됩니다.
+      </p>
+    </div>
   </div>
 
-  <!-- 설명 영역 -->
-  <div class="container">
-    <h2>방어율 특이점이란?</h2>
-    <p>
-      현재 스테이지에서<br />
-      <strong>대미지 무시가 가능해지는 방어율의 최솟값</strong><br />
-      을 의미합니다.
-    </p>
-    <img src="방어율_특이점_설명.jpg" alt="방어율 특이점 설명 이미지" />
-    <p class="explanation">
-      방어율 특이점은 스테이지마다 모두 다릅니다.<br />
-      방어율 특이점을 달성하거나 초과하면 해당 스테이지의 적으로부터 받는
-      대미지를 완전히 무시하게 됩니다.<br />
-      따라서 방어율 특이점보다 방어율이 높으면 생존률이 급격히 향상됩니다.
-    </p>
-  </div>
+  <!-- Firebase 연동 -->
+  <script type="module">
+    // Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, set, increment, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-  <script>
-    function calculate() {
-      const stage = parseFloat(document.getElementById("stage").value);
-      const subStage = parseFloat(document.getElementById("subStage").value);
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhybHNn2Uj1ULJpi8wIPN5nl6wPzSdDhc",
+      authDomain: "awesome-c5c71.firebaseapp.com",
+      projectId: "awesome-c5c71",
+      storageBucket: "awesome-c5c71.firebasestorage.app",
+      messagingSenderId: "161644896490",
+      appId: "1:161644896490:web:6188cba928fe1970b13793",
+      databaseURL: "https://awesome-c5c71-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
 
-      if (
-        isNaN(stage) ||
-        isNaN(subStage) ||
-        stage <= 0 ||
-        subStage <= 0 ||
-        subStage > 100
-      ) {
-        alert("올바른 값을 입력하세요. (스테이지는 1 이상, 세부 스테이지는 1~100)");
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const counterRef = ref(db, 'clickCount');
+
+    // 계산 함수
+    window.calculate = async function () {
+      const stage = parseFloat(document.getElementById('stage').value);
+      const subStage = parseFloat(document.getElementById('subStage').value);
+      const resultDiv = document.getElementById('result');
+
+      if (isNaN(stage) || isNaN(subStage) || stage <= 0 || subStage <= 0) {
+        alert('올바른 값을 입력하세요.');
         return;
       }
 
-      let result = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
+      let value = stage * 11.1 + 95.1 + (subStage - 1) * 0.111;
+      value += (stage % 9 === 0) ? (Math.floor(stage / 9) - 1) / 10 : Math.floor(stage / 9) / 10;
 
-      if (stage % 9 === 0) {
-        result += (Math.floor(stage / 9) - 1) / 10;
-      } else {
-        result += Math.floor(stage / 9) / 10;
-      }
+      resultDiv.innerText = `${stage}-${subStage}에서의 방어율 특이점은 ${Math.round(value * 100) / 100}% 입니다.`;
 
-      result = Math.round(result * 100) / 100;
-      document.getElementById("result").innerText =
-        `${stage}-${subStage}에서의 방어율 특이점은 ${result}% 입니다.`;
+      // 클릭 수 증가
+      update(counterRef, { ".sv": { "increment": 1 } });
     }
+
+    // 클릭 수 표시
+    onValue(counterRef, (snapshot) => {
+      const count = snapshot.val() || 0;
+      document.getElementById("count").innerText = count;
+    });
   </script>
+
 </body>
 </html>
